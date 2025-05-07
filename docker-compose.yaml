@@ -1,0 +1,8 @@
+services:
+  docker-cleanup:
+    image: golang:1.23.0-alpine
+    working_dir: /app
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./:/app
+    command: go run ./cmd/docker-cleanup/main.go --containers --images
