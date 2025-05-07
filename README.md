@@ -2,7 +2,7 @@
 
 docker-cleanup - is lightweight image for prune containers and images from Docker host
 
-## Deploy to swarm
+## Deploy to Swarm
 
 ```yaml
 services:
