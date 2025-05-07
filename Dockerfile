@@ -24,4 +24,4 @@ COPY --from=builder /go/bin/docker-cleanup /go/bin/docker-cleanup
 
 EXPOSE 8000
 
-CMD ["/go/bin/docker-cleanup"]
+ENTRYPOINT ["/go/bin/docker-cleanup"]
