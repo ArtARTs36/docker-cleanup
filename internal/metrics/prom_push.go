@@ -19,10 +19,11 @@ func NewPushPrometheusCollector(
 	collector Collector,
 	url string,
 	gatherer prometheus.Gatherer,
+	nodeName string,
 ) Collector {
 	return &pushPrometheusCollector{
 		collector: collector,
-		pusher:    push.New(url, "dockercleanup").Gatherer(gatherer),
+		pusher:    push.New(url, "dockercleanup").Gatherer(gatherer).Grouping("node", nodeName),
 	}
 }
 

@@ -65,7 +65,7 @@ func run(cliCtx *cli.Context) error {
 		}
 	}()
 
-	metricsCollector, err := createMetricsCollector(cliCtx.Opts["metrics-server"])
+	metricsCollector, err := createMetricsCollector(cliCtx.Context, cliCtx.Opts["metrics-server"], dockerClient)
 	if err != nil {
 		return fmt.Errorf("create metrics collector: %w", err)
 	}
@@ -93,7 +93,11 @@ func run(cliCtx *cli.Context) error {
 	return nil
 }
 
-func createMetricsCollector(metricsServer string) (metrics.Collector, error) {
+func createMetricsCollector(
+	ctx context.Context,
+	metricsServer string,
+	dockerClient *client.Client,
+) (metrics.Collector, error) {
 	if metricsServer == "" {
 		return metrics.NoopCollector{}, nil
 	}
@@ -109,5 +113,10 @@ func createMetricsCollector(metricsServer string) (metrics.Collector, error) {
 		return nil, fmt.Errorf("register prometheus collector: %w", err)
 	}
 
-	return metrics.NewPushPrometheusCollector(collector, metricsServer, registry), nil
+	dockerInfo, err := dockerClient.Info(ctx)
+	if err != nil {
+		return nil, fmt.Errorf("get docker info: %w", err)
+	}
+
+	return metrics.NewPushPrometheusCollector(collector, metricsServer, registry, dockerInfo.Name), nil
 }
