@@ -11,7 +11,7 @@ type CompositeCleaner struct {
 	cleaners map[string]Cleaner
 }
 
-func NewCompositeCLeaner(cleaners map[string]Cleaner) *CompositeCleaner {
+func NewCompositeCleaner(cleaners map[string]Cleaner) *CompositeCleaner {
 	return &CompositeCleaner{
 		cleaners: cleaners,
 	}

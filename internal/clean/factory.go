@@ -21,5 +21,5 @@ func CreateCleaner(cli *client.Client, opts Opts, metricsCollector metrics.Colle
 		cleaners["image-cleaner"] = NewImageCleaner(cli, metricsCollector)
 	}
 
-	return NewCompositeCLeaner(cleaners)
+	return NewCompositeCleaner(cleaners)
 }
