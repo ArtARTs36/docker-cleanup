@@ -22,7 +22,9 @@ func NewImageCleaner(cli *client.Client, metricsCollector metrics.Collector) *Im
 }
 
 func (c *ImageCleaner) Clean(ctx context.Context) error {
-	report, err := c.client.ImagesPrune(ctx, filters.NewArgs())
+	report, err := c.client.ImagesPrune(ctx, filters.NewArgs(
+		filters.Arg("dangling", "false"),
+	))
 	if err != nil {
 		return err
 	}
